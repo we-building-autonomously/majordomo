@@ -1,0 +1,23 @@
+{
+  "name": "majordomo",
+  "version": "0.1.0",
+  "description": "An IT-manager agent harness: humans set it up, other agents request keys/access; it provisions via API or signs up via browser on behalf of the org.",
+  "type": "module",
+  "bin": {
+    "majordomo": "src/index.ts"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "smoke": "node scripts/smoke.ts"
+  },
+  "engines": {
+    "node": ">=23"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0"
+  },
+  "optionalDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "license": "MIT"
+}

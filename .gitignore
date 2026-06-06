@@ -1,0 +1,5 @@
+node_modules/
+*.log
+.DS_Store
+# local data dir if someone points MAJORDOMO_HOME here
+.majordomo/
