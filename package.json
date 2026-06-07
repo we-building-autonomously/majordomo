@@ -1,6 +1,6 @@
 {
   "name": "@run-agents/it",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An IT-manager agent harness: humans set it up, other agents request keys/access; it provisions via API or signs up via browser on behalf of the org.",
   "type": "module",
   "bin": {
