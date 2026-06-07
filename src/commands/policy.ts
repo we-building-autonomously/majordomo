@@ -40,7 +40,7 @@ async function allow(rest: string[]): Promise<void> {
     if (!agent) { log.err(`agent "${agentRef}" not found`); process.exit(1); }
     agentId = agent.id;
   }
-  if (serviceKey !== "*" && !catalogEntry(serviceKey)) {
+  if (serviceKey !== "*" && !catalogEntry(serviceKey) && !store.service(serviceKey)) {
     log.err(`unknown service "${serviceKey}"`); process.exit(1);
   }
   const acts = (actions.length ? actions : ["provision"]).map((a) => a.toLowerCase());
