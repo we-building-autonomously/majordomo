@@ -57,7 +57,7 @@ export function startMcp(vault: Vault): void {
         return reply({
           protocolVersion: PROTOCOL_VERSION,
           capabilities: { tools: {} },
-          serverInfo: { name: "majordomo", version: "0.1.0" },
+          serverInfo: { name: "majordomo", version: "0.2.0" },
         });
       case "notifications/initialized":
       case "initialized":

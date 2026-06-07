@@ -2,7 +2,7 @@
 // majordomo — IT manager agent harness. CLI router.
 import { color, log } from "./util/log.ts";
 
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 const BIN = "it";
 
 const HELP = `${color.bold(BIN)} ${color.dim("v" + VERSION)} — an IT-manager agent that provisions and grants service access to other agents.
