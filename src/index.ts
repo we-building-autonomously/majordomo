@@ -22,6 +22,7 @@ ${color.bold("runtime (agents):")}
   ${BIN} serve [--http :8787] [--mcp] expose HTTP + MCP so remote agents can request
 
 ${color.bold("review:")}
+  ${BIN} dashboard [--http :7788]     open the human web UI (grants, approvals, audit)
   ${BIN} grants [--agent <name>]      list issued grants
   ${BIN} revoke <grant-id>            revoke a grant
   ${BIN} audit [-n N]                 audit log
@@ -63,6 +64,10 @@ async function main(): Promise<void> {
         break;
       case "serve":
         await (await import("./commands/serve.ts")).cmdServe(rest);
+        break;
+      case "dashboard":
+      case "ui":
+        await (await import("./commands/dashboard.ts")).cmdDashboard(rest);
         break;
       case "grants":
         await (await import("./commands/audit.ts")).cmdGrants(rest);

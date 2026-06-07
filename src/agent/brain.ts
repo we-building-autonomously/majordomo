@@ -118,8 +118,14 @@ function decideHeuristic(prompt: string, options: Option[]): { serviceKey: strin
   return { serviceKey: best.serviceKey, action: best.action, params, reasoning: "keyword heuristic (no LLM key set)" };
 }
 
+/** Options for the fulfilment pipeline. */
+export type FulfillOpts = {
+  /** Bypass the human-approval gate (used when a human approves a queued request from the dashboard). */
+  skipApproval?: boolean;
+};
+
 /** Full fulfilment pipeline. */
-export async function fulfill(store: Store, vault: Vault, agent: RequestingAgent, prompt: string): Promise<FulfillResult> {
+export async function fulfill(store: Store, vault: Vault, agent: RequestingAgent, prompt: string, opts: FulfillOpts = {}): Promise<FulfillResult> {
   const org = store.requireOrg();
   const options = availableOptions(store);
 
@@ -154,7 +160,7 @@ export async function fulfill(store: Store, vault: Vault, agent: RequestingAgent
     store.audit(agent.id, "request.denied", { prompt, reason: decisionPolicy.reason });
     return { outcome: "denied", message: `denied: ${decisionPolicy.reason}`, decision };
   }
-  if (decisionPolicy.requiresApproval) {
+  if (decisionPolicy.requiresApproval && !opts.skipApproval) {
     const rec = makeRecord(agent, prompt, "pending-approval", "request requires human approval", decision);
     store.addRequest(rec);
     store.audit(agent.id, "request.pending", { prompt, policy: decisionPolicy.matched?.id });

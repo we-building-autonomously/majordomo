@@ -122,6 +122,26 @@ export class Store {
   requests(): RequestRecord[] {
     return this.data.requests;
   }
+  request(requestId: string): RequestRecord | undefined {
+    return this.data.requests.find((r) => r.id === requestId);
+  }
+  pendingRequests(): RequestRecord[] {
+    return this.data.requests.filter((r) => r.outcome === "pending-approval");
+  }
+  setRequestOutcome(requestId: string, outcome: RequestRecord["outcome"], message?: string): boolean {
+    const r = this.request(requestId);
+    if (!r) return false;
+    r.outcome = outcome;
+    if (message) r.message = message;
+    this.save();
+    return true;
+  }
+  removeRequest(requestId: string): boolean {
+    const before = this.data.requests.length;
+    this.data.requests = this.data.requests.filter((r) => r.id !== requestId);
+    this.save();
+    return this.data.requests.length < before;
+  }
 
   // --- audit ---
   audit(actor: string, event: string, detail: Record<string, unknown> = {}): void {
