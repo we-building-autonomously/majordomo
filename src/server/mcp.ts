@@ -21,7 +21,7 @@ const TOOLS = [
       type: "object",
       properties: {
         prompt: { type: "string", description: "What you need, in plain language." },
-        token: { type: "string", description: "Your majordomo agent token (or set MAJORDOMO_AGENT_TOKEN)." },
+        token: { type: "string", description: "Your it agent token (or set MAJORDOMO_AGENT_TOKEN)." },
       },
       required: ["prompt"],
     },

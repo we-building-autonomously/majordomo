@@ -18,7 +18,7 @@ async function resolveMasterKey(): Promise<string> {
 
 /** Open store + vault, unlocking with the master key. */
 export async function loadCtx(): Promise<Ctx> {
-  if (!Vault.exists()) throw new Error("not initialized — run `majordomo init` first");
+  if (!Vault.exists()) throw new Error("not initialized — run `it init` first");
   const key = await resolveMasterKey();
   const vault = Vault.open(key); // throws on wrong key
   const store = Store.load();

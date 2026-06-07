@@ -1,4 +1,4 @@
-// `majordomo policy ...` — configure which agents may do what on which services.
+// `it policy ...` — configure which agents may do what on which services.
 import { loadCtx } from "../context.ts";
 import { id, nowISO } from "../util/id.ts";
 import { parseArgs, str, num, bool } from "../util/args.ts";
@@ -19,9 +19,9 @@ export async function cmdPolicy(argv: string[]): Promise<void> {
     case "rm":
     case "remove": return remove(rest);
     default:
-      log.info("usage: majordomo policy <allow|list|remove>");
-      log.detail('e.g. majordomo policy allow my-bot supabase provision --max 3');
-      log.detail('     majordomo policy allow "*" twilio read');
+      log.info("usage: it policy <allow|list|remove>");
+      log.detail('e.g. it policy allow my-bot supabase provision --max 3');
+      log.detail('     it policy allow "*" twilio read');
   }
 }
 
@@ -29,7 +29,7 @@ async function allow(rest: string[]): Promise<void> {
   const { _, flags } = parseArgs(rest);
   const [agentRef, serviceKey, ...actions] = _;
   if (!agentRef || !serviceKey) {
-    log.err('usage: majordomo policy allow <agent|*> <service|*> [actions...] [--max N] [--approve]');
+    log.err('usage: it policy allow <agent|*> <service|*> [actions...] [--max N] [--approve]');
     process.exit(1);
   }
   const { store } = await loadCtx();
@@ -63,7 +63,7 @@ async function allow(rest: string[]): Promise<void> {
 async function list(): Promise<void> {
   const { store } = await loadCtx();
   const pols = store.policies();
-  if (pols.length === 0) { log.info("no policies. try: majordomo policy allow my-bot supabase provision"); return; }
+  if (pols.length === 0) { log.info("no policies. try: it policy allow my-bot supabase provision"); return; }
   log.info(color.bold("\n  policies:\n"));
   for (const p of pols) {
     const agentName = p.agentId === "*" ? "*" : store.agents().find((a) => a.id === p.agentId)?.name ?? p.agentId;
@@ -76,7 +76,7 @@ async function list(): Promise<void> {
 async function remove(rest: string[]): Promise<void> {
   const { _ } = parseArgs(rest);
   const { store } = await loadCtx();
-  if (!_[0]) { log.err("usage: majordomo policy remove <policy-id>"); process.exit(1); }
+  if (!_[0]) { log.err("usage: it policy remove <policy-id>"); process.exit(1); }
   const ok = store.removePolicy(_[0]);
   if (ok) { store.audit("human", "policy.remove", { policy: _[0] }); log.ok(`removed ${_[0]}`); }
   else log.err(`policy ${_[0]} not found`);

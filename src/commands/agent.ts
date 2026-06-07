@@ -1,4 +1,4 @@
-// `majordomo agent ...` — manage requesting agents (clients that ask for access).
+// `it agent ...` — manage requesting agents (clients that ask for access).
 import { loadCtx } from "../context.ts";
 import { id, nowISO } from "../util/id.ts";
 import { parseArgs, str } from "../util/args.ts";
@@ -18,14 +18,14 @@ export async function cmdAgent(argv: string[]): Promise<void> {
     case "disable": return setDisabled(rest, true);
     case "enable": return setDisabled(rest, false);
     default:
-      log.info("usage: majordomo agent <add|list|rotate|disable|enable>");
+      log.info("usage: it agent <add|list|rotate|disable|enable>");
   }
 }
 
 async function add(rest: string[]): Promise<void> {
   const { _, flags } = parseArgs(rest);
   const name = _[0] || str(flags, "name");
-  if (!name) { log.err("usage: majordomo agent add <name> [--desc ...]"); process.exit(1); }
+  if (!name) { log.err("usage: it agent add <name> [--desc ...]"); process.exit(1); }
   const { store } = await loadCtx();
   if (store.agent(name)) { log.err(`agent "${name}" already exists`); process.exit(1); }
 
@@ -48,13 +48,13 @@ async function add(rest: string[]): Promise<void> {
   log.warn("bearer token — shown once, give it to the agent:");
   log.info(`\n    ${color.bold(color.cyan(token))}\n`);
   log.detail(`the agent presents this to request access:`);
-  log.detail(`majordomo request --as ${token.slice(0, 12)}… "I need a database"`);
+  log.detail(`it request --as ${token.slice(0, 12)}… "I need a database"`);
 }
 
 async function list(): Promise<void> {
   const { store } = await loadCtx();
   const agents = store.agents();
-  if (agents.length === 0) { log.info("no agents yet. try: majordomo agent add my-bot"); return; }
+  if (agents.length === 0) { log.info("no agents yet. try: it agent add my-bot"); return; }
   log.info(color.bold("\n  requesting agents:\n"));
   for (const a of agents) {
     const dot = a.disabled ? color.red("○") : color.green("●");

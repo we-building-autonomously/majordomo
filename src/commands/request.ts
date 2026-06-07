@@ -1,4 +1,4 @@
-// `majordomo request --as <token> "<natural language request>"`
+// `it request --as <token> "<natural language request>"`
 // The agent-facing entrypoint: present a bearer token, describe what you need,
 // receive scoped credentials (or a denial / approval-pending response).
 import { loadCtx } from "../context.ts";
@@ -15,7 +15,7 @@ export async function cmdRequest(argv: string[]): Promise<void> {
   const asJson = bool(flags, "json");
 
   if (!token || !prompt) {
-    log.err('usage: majordomo request --as <token> "<what you need>" [--json]');
+    log.err('usage: it request --as <token> "<what you need>" [--json]');
     process.exit(1);
   }
 
@@ -65,7 +65,7 @@ export async function cmdRequest(argv: string[]): Promise<void> {
       log.err(result.message); break;
     case "pending-approval":
       log.warn(result.message);
-      log.detail("a human can review with: majordomo audit"); break;
+      log.detail("a human can review with: it audit"); break;
     case "needs-signup":
       log.warn(result.message); break;
     case "error":

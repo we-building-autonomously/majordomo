@@ -1,4 +1,4 @@
-// `majordomo audit` / `grants` — review what the IT agent has done.
+// `it audit` / `grants` — review what the IT agent has done.
 import { loadCtx } from "../context.ts";
 import { parseArgs, num } from "../util/args.ts";
 import { log, color } from "../util/log.ts";

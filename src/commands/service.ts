@@ -1,4 +1,4 @@
-// `majordomo service ...` — register and inspect services the org manages.
+// `it service ...` — register and inspect services the org manages.
 import { loadCtx } from "../context.ts";
 import { CATALOG, catalogEntry } from "../catalog.ts";
 import { id, nowISO } from "../util/id.ts";
@@ -19,7 +19,7 @@ export async function cmdService(argv: string[]): Promise<void> {
     case "catalog": return catalog();
     case "set-secret": return setSecret(rest);
     default:
-      log.info("usage: majordomo service <add|list|show|catalog|set-secret>");
+      log.info("usage: it service <add|list|show|catalog|set-secret>");
   }
 }
 
@@ -35,7 +35,7 @@ function catalog(): void {
 async function add(rest: string[]): Promise<void> {
   const { _, flags } = parseArgs(rest);
   const key = (_[0] || str(flags, "key")).toLowerCase();
-  if (!key) { log.err("usage: majordomo service add <name> [--signup-url ...] [--api-base ...] [--docs ...] [--secrets a,b]"); process.exit(1); }
+  if (!key) { log.err("usage: it service add <name> [--signup-url ...] [--api-base ...] [--docs ...] [--secrets a,b]"); process.exit(1); }
   const entry = catalogEntry(key);
   const { store, vault } = await loadCtx();
 
@@ -97,7 +97,7 @@ async function add(rest: string[]): Promise<void> {
   } else {
     log.warn(`status: needs-signup — missing root secrets: ${secretDefs.filter((s) => !rootSecretRefs[s.name]).map((s) => s.name).join(", ") || "(none)"}`);
     log.detail(`the IT agent will sign up at ${signupUrl ?? homepage ?? "the service"} on first request${isSimulate() ? " (simulate mode)" : ""}`);
-    log.detail(`or add a key now: majordomo service set-secret ${key} <name> <value>`);
+    log.detail(`or add a key now: it service set-secret ${key} <name> <value>`);
   }
 }
 
@@ -105,7 +105,7 @@ async function setSecret(rest: string[]): Promise<void> {
   const { _ } = parseArgs(rest);
   const [key, name, value] = _;
   if (!key || !name || !value) {
-    log.err("usage: majordomo service set-secret <service> <name> <value>");
+    log.err("usage: it service set-secret <service> <name> <value>");
     process.exit(1);
   }
   const { store, vault } = await loadCtx();
@@ -124,7 +124,7 @@ async function setSecret(rest: string[]): Promise<void> {
 async function list(): Promise<void> {
   const { store } = await loadCtx();
   const svcs = store.services();
-  if (svcs.length === 0) { log.info("no services registered. try: majordomo service add supabase"); return; }
+  if (svcs.length === 0) { log.info("no services registered. try: it service add supabase"); return; }
   log.info(color.bold("\n  services:\n"));
   for (const s of svcs) {
     const dot = s.status === "configured" || s.status === "active" ? color.green("●") : color.yellow("○");

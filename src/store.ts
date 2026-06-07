@@ -47,7 +47,7 @@ export class Store {
     return this.data.org;
   }
   requireOrg(): Org {
-    if (!this.data.org) throw new Error("not initialized — run `majordomo init`");
+    if (!this.data.org) throw new Error("not initialized — run `it init`");
     return this.data.org;
   }
 

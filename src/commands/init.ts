@@ -1,4 +1,4 @@
-// `majordomo init` — one-time setup performed by a human. Creates the org,
+// `it init` — one-time setup performed by a human. Creates the org,
 // the encrypted vault, and the master key, then prints next steps.
 import { Store } from "../store.ts";
 import { Vault } from "../vault.ts";
@@ -61,10 +61,10 @@ export async function cmdInit(argv: string[]): Promise<void> {
   }
 
   log.info(color.bold("\n  next steps:"));
-  log.detail("majordomo service add supabase      # register a service to manage");
-  log.detail("majordomo agent add my-bot          # register a requesting agent (prints a token)");
-  log.detail('majordomo policy allow my-bot supabase provision');
-  log.detail('majordomo request --as <token> "I need a postgres database"');
-  log.detail("majordomo serve                     # expose HTTP + MCP for other agents");
+  log.detail("it service add supabase      # register a service to manage");
+  log.detail("it agent add my-bot          # register a requesting agent (prints a token)");
+  log.detail('it policy allow my-bot supabase provision');
+  log.detail('it request --as <token> "I need a postgres database"');
+  log.detail("it serve                     # expose HTTP + MCP for other agents");
   log.info("");
 }

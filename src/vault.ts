@@ -39,7 +39,7 @@ export class Vault {
 
   /** Open an existing vault; throws on wrong passphrase. */
   static open(passphrase: string): Vault {
-    if (!existsSync(vaultPath())) throw new Error("vault not initialized — run `majordomo init`");
+    if (!existsSync(vaultPath())) throw new Error("vault not initialized — run `it init`");
     // Verify passphrase against meta if present.
     if (existsSync(masterKeyMetaPath())) {
       const meta = JSON.parse(readFileSync(masterKeyMetaPath(), "utf8")) as { salt: string; check: string };

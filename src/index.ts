@@ -3,28 +3,29 @@
 import { color, log } from "./util/log.ts";
 
 const VERSION = "0.1.0";
+const BIN = "it";
 
-const HELP = `${color.bold("majordomo")} ${color.dim("v" + VERSION)} — an IT-manager agent that provisions and grants service access to other agents.
+const HELP = `${color.bold(BIN)} ${color.dim("v" + VERSION)} — an IT-manager agent that provisions and grants service access to other agents.
 
 ${color.bold("setup (human):")}
-  majordomo init                         initialize org + encrypted vault
-  majordomo service catalog              list services majordomo can manage
-  majordomo service add <key>            register a service (e.g. supabase, twilio, browserbase)
-  majordomo service list|show <key>      inspect registered services
-  majordomo agent add <name>             register a requesting agent (prints a bearer token)
-  majordomo agent list|rotate|disable    manage requesting agents
-  majordomo policy allow <agent> <svc> <actions...>   grant access (actions: read provision signup *)
-  majordomo policy list|remove           manage policies
+  ${BIN} init                         initialize org + encrypted vault
+  ${BIN} service catalog              list services it can manage
+  ${BIN} service add <key>            register a service (e.g. supabase, twilio, browserbase)
+  ${BIN} service list|show <key>      inspect registered services
+  ${BIN} agent add <name>             register a requesting agent (prints a bearer token)
+  ${BIN} agent list|rotate|disable    manage requesting agents
+  ${BIN} policy allow <agent> <svc> <actions...>   grant access (actions: read provision signup *)
+  ${BIN} policy list|remove           manage policies
 
 ${color.bold("runtime (agents):")}
-  majordomo request --as <token> "..."   request access/resource in natural language
-  majordomo serve [--http :8787] [--mcp] expose HTTP + MCP so remote agents can request
+  ${BIN} request --as <token> "..."   request access/resource in natural language
+  ${BIN} serve [--http :8787] [--mcp] expose HTTP + MCP so remote agents can request
 
 ${color.bold("review:")}
-  majordomo grants [--agent <name>]      list issued grants
-  majordomo revoke <grant-id>            revoke a grant
-  majordomo audit [-n N]                 audit log
-  majordomo vault list [--reveal]        inspect the encrypted vault
+  ${BIN} grants [--agent <name>]      list issued grants
+  ${BIN} revoke <grant-id>            revoke a grant
+  ${BIN} audit [-n N]                 audit log
+  ${BIN} vault list [--reveal]        inspect the encrypted vault
 
 ${color.dim("env: MAJORDOMO_MASTER_KEY (unlock), MAJORDOMO_SIMULATE=1 (fake provisioning),")}
 ${color.dim("     ANTHROPIC_API_KEY (LLM brain + browser signup), MAJORDOMO_HOME (data dir)")}`;

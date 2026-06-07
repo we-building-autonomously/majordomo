@@ -1,4 +1,4 @@
-// `majordomo vault ...` — inspect the encrypted secret store (values shown only with --reveal).
+// `it vault ...` — inspect the encrypted secret store (values shown only with --reveal).
 import { loadCtx } from "../context.ts";
 import { parseArgs, bool } from "../util/args.ts";
 import { log, color } from "../util/log.ts";
@@ -11,7 +11,7 @@ export async function cmdVault(argv: string[]): Promise<void> {
     case "list": return list(rest);
     case "get": return get(rest);
     default:
-      log.info("usage: majordomo vault <list|get> [--reveal]");
+      log.info("usage: it vault <list|get> [--reveal]");
   }
 }
 

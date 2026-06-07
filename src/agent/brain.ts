@@ -137,8 +137,8 @@ export async function fulfill(store: Store, vault: Vault, agent: RequestingAgent
   if (!svc) {
     const known = catalogEntry(decision.serviceKey);
     const msg = known
-      ? `service "${decision.serviceKey}" is not registered — a human must run: majordomo service add ${decision.serviceKey}`
-      : `no registered service matches "${decision.serviceKey}" — a human can add any service: majordomo service add ${decision.serviceKey} --signup-url <url>`;
+      ? `service "${decision.serviceKey}" is not registered — a human must run: it service add ${decision.serviceKey}`
+      : `no registered service matches "${decision.serviceKey}" — a human can add any service: it service add ${decision.serviceKey} --signup-url <url>`;
     const rec = makeRecord(agent, prompt, "needs-signup", msg, decision);
     store.addRequest(rec);
     return { outcome: "needs-signup", message: msg, decision };

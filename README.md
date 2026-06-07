@@ -1,4 +1,6 @@
-# majordomo
+# majordomo &nbsp;·&nbsp; `@run-agents/it`
+
+> `npm i -g @run-agents/it` → the **`it`** command.
 
 **An IT-manager agent — as a CLI.** Not a coding agent: majordomo is the agent that *manages
 access to services for an organization*. A human sets it up once (registers the org, the services
@@ -35,7 +37,7 @@ agent signs up and provisions resources itself using three primitives — an aut
 the credentials. So you can point majordomo at a service it has never seen:
 
 ```bash
-majordomo service add pinecone --signup-url https://app.pinecone.io/signup --docs https://docs.pinecone.io
+it service add pinecone --signup-url https://app.pinecone.io/signup --docs https://docs.pinecone.io
 ```
 
 A few **bespoke accelerators** ship with the harness (Supabase, Twilio, Browserbase) as fast,
@@ -46,14 +48,17 @@ Force the universal path for everything with `MAJORDOMO_GENERIC=1`.
 
 ## Install / run
 
-No build step — runs TypeScript natively on Node ≥ 23 (type-stripping).
-
 ```bash
-cd majordomo
-node src/index.ts --help
-# optional: npm link  → use `majordomo` directly
-# for real browser sign-ups: npm i playwright && npx playwright install chromium
+npm install -g @run-agents/it      # installs the `it` command
+it --help
+
+# or run without installing:
+npx @run-agents/it --help
+
+# for real browser sign-ups: npm i -g playwright && npx playwright install chromium
 ```
+
+Requires Node ≥ 20. From a checkout, `npm run build && node dist/index.js --help` (or `node src/index.ts` on Node ≥ 23.6).
 
 ## Quick start (60 seconds, no accounts needed)
 
@@ -65,23 +70,21 @@ export MAJORDOMO_SIMULATE=1
 export MAJORDOMO_MASTER_KEY=choose-a-strong-key      # unlocks the vault non-interactively
 
 # 1. human sets things up
-node src/index.ts init --org "Acme Inc" --email it@acme.test
-node src/index.ts service add supabase --defer        # a catalog accelerator
-node src/index.ts service add pinecone \               # ANY service, free-form
+it init --org "Acme Inc" --email it@acme.test
+it service add supabase --defer        # a catalog accelerator
+it service add pinecone \               # ANY service, free-form
      --signup-url https://app.pinecone.io/signup --secrets api_key --defer
-node src/index.ts agent add deploy-bot                 # prints a bearer token — copy it
-node src/index.ts policy allow deploy-bot "*" provision signup
+it agent add deploy-bot                 # prints a bearer token — copy it
+it policy allow deploy-bot "*" provision signup
 
 # 2. an agent asks for what it needs
-node src/index.ts request --as <token> "I need a postgres database called orders"
-node src/index.ts request --as <token> "give me a pinecone api key"
+it request --as <token> "I need a postgres database called orders"
+it request --as <token> "give me a pinecone api key"
 
 # 3. the human reviews
-node src/index.ts grants
-node src/index.ts audit
+it grants
+it audit
 ```
-
-Run the full end-to-end check anytime: `node scripts/smoke.ts`.
 
 ---
 
@@ -135,7 +138,7 @@ Run the full end-to-end check anytime: `node scripts/smoke.ts`.
 
 **HTTP**
 ```bash
-MAJORDOMO_MASTER_KEY=… node src/index.ts serve --http 127.0.0.1:8787 &
+MAJORDOMO_MASTER_KEY=… it serve --http 127.0.0.1:8787 &
 curl -s -X POST http://127.0.0.1:8787/request \
   -H "Authorization: Bearer <agent-token>" \
   -d '{"prompt":"buy a phone number with area code 415"}'

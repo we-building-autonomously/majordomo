@@ -1,7 +1,7 @@
-// `majordomo serve` — expose the IT manager so other agents can request access.
-//   majordomo serve                 HTTP API on 127.0.0.1:8787
-//   majordomo serve --http :9000    HTTP on a custom addr
-//   majordomo serve --mcp           MCP server over stdio (for MCP-speaking agents)
+// `it serve` — expose the IT manager so other agents can request access.
+//   it serve                 HTTP API on 127.0.0.1:8787
+//   it serve --http :9000    HTTP on a custom addr
+//   it serve --mcp           MCP server over stdio (for MCP-speaking agents)
 import { loadCtxUnattended } from "../context.ts";
 import { parseArgs, str, bool } from "../util/args.ts";
 import { startHttp } from "../server/http.ts";
